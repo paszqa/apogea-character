@@ -1520,6 +1520,22 @@
             });
         }
 
+        function setImageSize(img) {
+            const image = new Image();
+            image.src = img.src;
+            image.onload = function() {
+                if (image.width === 32 && image.height === 32) {
+                    img.classList.add('size-32');
+                    img.classList.remove('size-16');
+                } else if (image.width === 16 && image.height === 16) {
+                    img.classList.add('size-16');
+                    img.classList.remove('size-32');
+                } else {
+                    img.classList.remove('size-32', 'size-16');
+                }
+            };
+        }
+
         function updateFromUrl() {
             const params = new URLSearchParams(window.location.search);
             if (params.has('level')) {
