@@ -392,7 +392,7 @@
     <div class="main-content">
         <div>
             <div class="maintitle">
-                <div class="mainname"><label>Character Stat Calculator v0.2</label></div>
+                <div class="mainname"><label>Character Stat Calculator v0.3</label></div>
                 <div class="logo"><a href="https://www.youtube.com/@QuickApogean"><img src="quick_logo_compact.png"></a></div>
                 <div class="logo"><a href="https://store.steampowered.com/app/2796220/Apogea/"><img src="pixelartlogo.png"></a></div>
                 <div class="copylink">
@@ -440,10 +440,10 @@
                 <div>-</div>
                 <div>+</div>
                 <div>Pts</div>
-                <div>Multiplier</div>
                 <div class="bonus transparent">Bonus</div>
                 <div class="bonus transparent">Item Bonus</div>
                 <div class="bonus transparent">Trait Bonus</div>
+                <div>Multiplier</div>
                 <div>Final</div>
             </div>
             <div id="stat-table"></div>
@@ -1138,9 +1138,9 @@
                     addedClass = "green";
                 }
                 const multiplier = classMultipliers[selectedClass][stat] || 1;
-                const bonus = added * growth * multiplier;
-                const itemBonus = itemBonuses[stat] * multiplier || 0;
-                const traitBonus = traitBonuses[stat] * multiplier || 0;
+                const bonus = added * growth;// * multiplier;
+                const itemBonus = itemBonuses[stat] || 0;
+                const traitBonus = traitBonuses[stat] || 0;
                 let bonuscolor;
                 let itembonuscolor;
                 let traitbonuscolor;
@@ -1174,28 +1174,34 @@
                     traitbonuscolor = "transparent";
                 }
                 let finalValue;
-                if((baseValue + bonus + itemBonus + traitBonus) % 1 == 0.5){
+                let preFinalValue; //Value of summed up everything BEFORE class multiplier and rounding
+                let bonusesSummedUp = bonus + itemBonus + traitBonus;
+                preFinalValue = baseValue + bonusesSummedUp * multiplier; //HERE IS THE CLASSMULTIPLIER / CLASS MULTIPLIER
+                //BANKERS ROUNDING  - up or down
+                if((preFinalValue) % 1 == 0.5){
                     if(stat == "Magic"){
-                        finalValue = baseValue + bonus + itemBonus + traitBonus + 0.5;
+                        finalValue = preFinalValue + 0.5;
                     }
                     else if(stat == "MP Regen"){
-                        if((baseValue + bonus + itemBonus + traitBonus - 0.5) % 2 == 1){
-                            finalValue = baseValue + bonus + itemBonus + traitBonus - 0.5;
+                        if((preFinalValue - 0.5) % 2 == 1){
+                            finalValue = preFinalValue - 0.5;
                         }
                         else{
-                            finalValue = baseValue + bonus + itemBonus + traitBonus + 0.5;
+                            finalValue = preFinalValue + 0.5;
                         }
                     }
-                    else if((baseValue + bonus + itemBonus + traitBonus - 0.5) % 2 == 0){
-                        finalValue = baseValue + bonus + itemBonus + traitBonus - 0.5;
+                    else if((preFinalValue - 0.5) % 2 == 0){
+                        finalValue = preFinalValue - 0.5;
                     }
                     else{
-                        finalValue = baseValue + bonus + itemBonus + traitBonus + 0.5;
+                        finalValue = preFinalValue + 0.5;
                     }
                 }
                 else{
-                    finalValue = baseValue + bonus + itemBonus + traitBonus;
+                    finalValue = preFinalValue;
                 }
+                //APPLY CLASS MULTIPLIER / CLASSMULTIPLIER AT THE END
+                //finalValue *= multiplier; //It's done earlier, get lost
                 if(finalValue < 0 && stat != "TotalWeight"){ //exceptiom for weight?
                     finalValue = 0;
                 }
@@ -1283,10 +1289,10 @@
                     <div>${added > 0 ? `<button onclick='subtractPoint("${stat}")'>-</button>` : ''}</div>
                     <div>${(availablePoints > 0 && added < level && !["Attack Speed", "Armor", "Defense", "Damage", "Movespeed","Range"].includes(stat)) ? `<button onclick='addPoint("${stat}")'>+</button>` : ''}</div>
                     <div class="${addedClass}">${added}</div>
-                    <div class="smaller multiplier ${multiplierClass}">${multiplier.toFixed(2) * 100}%</div>
                     <div class="bonus ${bonuscolor}">${bonus.toFixed(2)}</div>
                     <div class="bonus ${itembonuscolor}">${itemBonus.toFixed(2)}</div>
                     <div class="bonus ${traitbonuscolor}">${traitBonus.toFixed(2)}</div>
+                    <div class="smaller multiplier ${multiplierClass}">${multiplier.toFixed(2) * 100}%</div>
                     <div>${extraStringForCapacity}${finalValue.toFixed(0)}${damageRangeString}${extraMagicDamageString || ""}${unnaturalFlowBonusString}${dpsString}</div>
                 </div>`;
                 
