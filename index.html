@@ -560,7 +560,7 @@
             [11, "Bread and Butter", "Using a sword and shield gives you extra damage", [0,2,4,8]],
             [12, "Well Protected", "Heavy armor has more Armor", ["0", "1%","5%","10%","17%","25%"]],
             [13, "Bulking Up", "Gain Health for each equipped heavy armor", [0,5,10,25]],
-            [14, "Heavy Metal", "if all your equipment weighs more than 150oz, gain Armor", [0,5,10,20]],
+            [14, "Heavy Metal", "if all your equipment weighs more than 150oz, gain Armor", ["0%","5%","10%","20%"]],
             [15, "Carry your might", "each 75 max capacity gives you 1 extra Armor and 10 Health, capping at 15 Armor and 150 Health", ["Off", "On"]],
             [16, "Blessed Plate", "Removes negative stats from heavy armor and gain 15 Mana for each equipped heavy armor", ["Off", "On"]],
             [17, "Blade Training", "Swords have more Damage", ["0%", "1%", "4%", "8%", "14%", "20%"]],
@@ -895,7 +895,23 @@
                         case "14": // Heavy Metal
                             const totalWeightTrait = calculateItemBonuses().TotalWeight;
                             if (totalWeightTrait > 150) {
-                                traitBonuses.Armor += parseInt(stage);
+                                //calculate total armor
+                                const armorSlotsTrait3 = document.querySelectorAll('.item-slot img');
+                                let heavyArmorTotalArmor2 = 0;
+                                //sum up all +armor values from all slots
+                                armorSlotsTrait3.forEach(img => {
+                                    const itemName = img.getAttribute('alt');
+                                    const item = items.find(i => i[0] === itemName);
+                                    if (item) {
+                                        if(item[8] > 0 && item[8] != "" && item[8] != null){
+                                            console.log(item+" adds "+item[8]);
+                                            heavyArmorTotalArmor2 += item[8];
+                                        }
+                                    }
+                                });
+                                //add percent bonus to total armor
+                                traitBonuses.Armor += heavyArmorTotalArmor2 * (parseInt(stage) / 100);
+
                             }
                             break;
                         case "15": // Carry your might
