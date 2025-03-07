@@ -340,7 +340,7 @@
             padding: 0px;
         }
         div.maintitle{
-            font-size: 2em;
+            font-size: 1.6em;
             text-align: center;
             margin: 20px;
             display: flex;
@@ -376,7 +376,7 @@
             height: 100px;
             font-family: '9Px3bus-WpXV', Arial, sans-serif;
             color: rgb(255, 255, 255);
-            font-size: 0.65em;
+            font-size: 0.85em;
             text-shadow: 2px 2px 2px rgba(0, 0, 0, 1), -2px -2px 2px rgba(0, 0, 0, 1), -2px 2px 2px rgba(0, 0, 0, 1), 2px -2px 2px rgba(0, 0, 0, 1);
         }
         .copylink button:hover {
@@ -392,7 +392,7 @@
     <div class="main-content">
         <div>
             <div class="maintitle">
-                <div class="mainname"><label>Character Stat Calculator</label></div>
+                <div class="mainname"><label>Character Stat Calculator v0.2</label></div>
                 <div class="logo"><a href="https://www.youtube.com/@QuickApogean"><img src="quick_logo_compact.png"></a></div>
                 <div class="logo"><a href="https://store.steampowered.com/app/2796220/Apogea/"><img src="pixelartlogo.png"></a></div>
                 <div class="copylink">
@@ -1509,12 +1509,13 @@
         function copyLink() {
             const level = document.getElementById("level").value;
             const characterClass = document.getElementById("class").value;
+            const availablePoints = document.getElementById("available-points").textContent;
             const itemSlots = Array.from(document.querySelectorAll('.item-slot img')).map(img => img.alt).join(',');
             const addedPointsStr = Object.entries(addedPoints).map(([key, value]) => `${key}:${value}`).join(',');
             const selectedTraitsStr = Object.entries(selectedTraits).map(([key, value]) => `${key}:${value}`).join(',');
 
             const protocol = window.location.protocol === "file:" ? "file://" : window.location.origin;
-            const url = `${protocol}${window.location.pathname}?level=${level}&class=${characterClass}&items=${itemSlots.replace(/\s+/g, '')}&points=${addedPointsStr.replace(/\s+/g, '')}&traits=${selectedTraitsStr.replace(/\s+/g, '')}`;
+            const url = `${protocol}${window.location.pathname}?level=${level}&available=${availablePoints}&class=${characterClass}&items=${itemSlots.replace(/\s+/g, '%20')}&points=${addedPointsStr.replace(/\s+/g, '')}&traits=${selectedTraitsStr.replace(/\s+/g, '')}`;
             navigator.clipboard.writeText(url).then(() => {
                 alert('Link copied to clipboard!');
             });
@@ -1541,6 +1542,10 @@
             if (params.has('level')) {
                 document.getElementById("level").value = params.get('level');
             }
+            if (params.has('available')) {
+                availablePoints = parseInt(params.get('available'));
+                document.getElementById("available-points").textContent = availablePoints;
+            }
             if (params.has('class')) {
                 selectClass(params.get('class'));
             }
@@ -1548,8 +1553,8 @@
                 const items = params.get('items').split(',');
                 document.querySelectorAll('.item-slot img').forEach((img, index) => {
                     if (items[index]) {
-                        img.src = `Items/${items[index]}.png`;
-                        img.alt = items[index];
+                        img.src = `Items/${items[index].replace(" ","")}.png`;
+                        img.alt = items[index].replace("\%20","");
                         img.style.display = 'block';
                         setImageSize(img); // Ensure image size is set correctly
                     }
@@ -1576,6 +1581,8 @@
                     });
                 });
             }
+            updateStats(); // Ensure stats are updated after setting items and traits
+            updateStats();
             updateStats();
         }
 
