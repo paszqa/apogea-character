@@ -869,7 +869,10 @@
                                 const itemName = img.getAttribute('alt');
                                 const item = items.find(i => i[0] === itemName);
                                 if (item && item[2].includes("heavy")) {
-                                    heavyArmorTotalArmor += item[8];
+                                    if(item[8] > 0 && item[8] != "" && item[8] != null){
+                                        console.log(item+" adds "+item[8]);
+                                        heavyArmorTotalArmor += item[8];
+                                    }
                                 }
                             });
                             //add the bonus to the total armor
