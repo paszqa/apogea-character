@@ -19,7 +19,7 @@
             }
         .stat-container {
             display: grid;
-            grid-template-columns: 150px 50px 40px 40px 40px 80px 100px 120px 120px 120px 100px;
+            grid-template-columns: 150px 50px 40px 40px 40px 80px 100px 120px 120px 190px 140px;
             gap: 0px;
             width: 1015px;
             margin-bottom: 0px;
@@ -340,21 +340,32 @@
             display: flex;
             height: 80px;
         }
-        div.maintitle div{
-            margin: 0px 20px;
+        div.maintitle div.logo{
+            margin: 0px 10px;
+            width: 200px;
+        }
+        div.maintitle div.copylink{
+            margin: 0px 30px;
+            width: 150px;
+            font-size: 1em;
         }
         div.maintitle div img{
             height: 120%;
         }
         div.maintitle div.mainname{
-            width: 100%;
+            width: 280px;
         }
     </style>
 </head>
 <body>
     <div class="main-content">
         <div>
-            <div class="maintitle"><div class="mainname"><label>Character Stat Calculator</label></div><div><img src="quick_logo_compact.png"></div><div><img src="logo_apogea.png"></div></div>
+            <div class="maintitle">
+                <div class="mainname"><label>Character Stat Calculator</label></div>
+                <div class="logo"><img src="quick_logo_compact.png"></div>
+                <div class="logo"><img src="logo_apogea.png"></div>
+                <div class="copylink">COPY LINK</div>
+            </div>
             <div class="character">
                 <div class="leveldiv">
                     <label class="leveltitle" for="level">Character Level:</label>
@@ -676,9 +687,12 @@
                             break;
                         case "6": //battle boots
                             //count extra movementspeed from item bonuses + extra movement speed form traitbonuses * 2
-                            if (parseInt(stage) > 0) {
-                                traitBonuses.Damage += (calculateItemBonuses().Movespeed + traitBonuses.Movespeed) * 2;
-                                traitBonuses.Movespeed -= calculateItemBonuses().Movespeed; //it's conversion, so it's negative
+                            //console.log("ZZZZ Item+trait bonus movespeed: "+calculateItemBonuses().Movespeed+traitBonuses.Movespeed);
+                            if (stage == "On") {
+                                //console.log("Item+trait bonus movespeed: "+calculateItemBonuses().Movespeed+traitBonuses.Movespeed);
+                                //stringfloat conversion stupidityy
+                                traitBonuses.Damage += (parseFloat(calculateItemBonuses().Movespeed) + parseFloat(traitBonuses.Movespeed)) * 2;
+                                //traitBonuses.Movespeed -= calculateItemBonuses().Movespeed; //it's conversion, so it's negative // IT IS NOT CONVERSION ACCORDING TO AEIKZ
                             }
                             break;
                         case "7": //dressing wizardly
@@ -1051,7 +1065,7 @@
                                 let extraAbility = baseStats["Ability"][1] * addedPoints["Ability"] + calculateItemBonuses().Ability;
                                 //add the bonus to attackspeed
                                 traitBonuses["Attack Speed"] += extraAbility;
-                                traitBonuses.Ability -= extraAbility;
+                                //traitBonuses.Ability -= extraAbility;
                             }
                             break;
                         case "24": // Unnatural Flow
@@ -1170,6 +1184,18 @@
                     }
                     extraStringForCapacity = "<span class='"+capacityColor+"'>"+itemBonuses["TotalWeight"].toFixed(1)+"</span>/";
                 }
+
+                //Damage range in brakcets:
+                let minDamage = 0;
+                let maxDamage = 0;
+                let damageRangeString = "";
+                //Get current Ability skill * class multiplier + itembonuses to ability + trait bonuses to ability
+                let abilitySkill = (baseStats["Ability"][0] + baseStats["Ability"][1] * addedPoints["Ability"] + calculateItemBonuses().Ability + traitBonuses.Ability);
+                if(stat == "Damage"){
+                    minDamage = (finalValue)/(5/(1+((abilitySkill*1.25)/100)));
+                    maxDamage = (finalValue)*(1+(abilitySkill*1.25)/100);
+                    damageRangeString = " ("+minDamage.toFixed(0)+" - "+maxDamage.toFixed(0)+")";
+                }
                 //Unnatural flow is unnatural
                 let extraMagicDamageString;
                 //if current stat = Damage and trait Unnatural Flow is active, add its stage to the Damage as an extra string in format "36 + 7", where 7 is Unnatural Flow's stage 2
@@ -1178,7 +1204,7 @@
                 }
                 // Add check for trait 24
                 let unnaturalFlowBonusString = "";
-                if (stat == "Damage" && selectedTraits["24"] && selectedTraits["24"] !== "0" && selectedTraits["24"] !== "Off") {
+                if (stat == "Damage" && selectedTraits["24"] && selectedTraits["24"] !== "0" && selectedTraits["24"] !== 0) {
                     unnaturalFlowBonusString = " + " + selectedTraits["24"];
                 }
                 
@@ -1192,7 +1218,7 @@
                     <div class="bonus ${bonuscolor}">${bonus.toFixed(2)}</div>
                     <div class="bonus ${itembonuscolor}">${itemBonus.toFixed(2)}</div>
                     <div class="bonus ${traitbonuscolor}">${traitBonus.toFixed(2)}</div>
-                    <div>${extraStringForCapacity}${finalValue.toFixed(0)}${extraMagicDamageString || ""}${unnaturalFlowBonusString}</div>
+                    <div>${extraStringForCapacity}${finalValue.toFixed(0)}${damageRangeString}${extraMagicDamageString || ""}${unnaturalFlowBonusString}</div>
                 </div>`;
                 
                 statTable.innerHTML += row;
