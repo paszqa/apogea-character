@@ -623,7 +623,10 @@
                                 const leftHandItem = items.find(i => i[0] === leftHandSlot.querySelector('img').getAttribute('alt'));
                                 const rightHandItem = items.find(i => i[0] === rightHandSlot.querySelector('img').getAttribute('alt'));
                                 if (leftHandItem && rightHandItem && leftHandItem[2] === "dagger" && rightHandItem[2] === "dagger") {
-                                    traitBonuses.Damage += (leftHandItem[5] + rightHandItem[5]);
+                                    //Get sum of all items Damage bonuses
+                                    let itemDamage = calculateItemBonuses().Damage;
+                                    
+                                    traitBonuses.Damage += itemDamage;//(leftHandItem[5] + rightHandItem[5]);
                                 }
                             }
                             break;
