@@ -19,7 +19,7 @@
             }
         .stat-container {
             display: grid;
-            grid-template-columns: 150px 50px 40px 40px 40px 80px 100px 120px 120px 190px 140px;
+            grid-template-columns: 150px 50px 40px 40px 40px 80px 100px 120px 120px 220px 140px;
             gap: 0px;
             width: 1015px;
             margin-bottom: 0px;
@@ -220,6 +220,12 @@
         span.yellow{
             color: rgb(255, 255, 0);
         }
+        span.purple{
+            color: rgb(173, 34, 166);
+        }
+        span.grey{
+            color: rgb(80, 88, 81);
+        }
         .item-slot.invalid {
             border-color: red;
         }
@@ -355,6 +361,31 @@
         div.maintitle div.mainname{
             width: 280px;
         }
+        .copylink button {
+            background-color: rgb(187, 255, 148);
+            color: black;
+            border: 2px solid rgb(54, 54, 54);
+            border-radius: 8px;
+            padding: 5px 10px;
+            margin: 0px 50px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.6s;
+            width: 160px;
+            height: 100px;
+            font-family: '9Px3bus-WpXV', Arial, sans-serif;
+            color: rgb(255, 255, 255);
+            font-size: 0.65em;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 1), -2px -2px 2px rgba(0, 0, 0, 1), -2px 2px 2px rgba(0, 0, 0, 1), 2px -2px 2px rgba(0, 0, 0, 1);
+        }
+        .copylink button:hover {
+            background-color: rgb(61, 204, 69);
+            color: black;
+        }
+        span.dps{
+            font-size: 0.5em;
+        }
     </style>
 </head>
 <body>
@@ -362,9 +393,11 @@
         <div>
             <div class="maintitle">
                 <div class="mainname"><label>Character Stat Calculator</label></div>
-                <div class="logo"><img src="quick_logo_compact.png"></div>
-                <div class="logo"><img src="logo_apogea.png"></div>
-                <div class="copylink">COPY LINK</div>
+                <div class="logo"><a href="https://www.youtube.com/@QuickApogean"><img src="quick_logo_compact.png"></a></div>
+                <div class="logo"><a href="https://store.steampowered.com/app/2796220/Apogea/"><img src="pixelartlogo.png"></a></div>
+                <div class="copylink">
+                    <button onclick="copyLink()">Copy Link 📋</button>
+                </div>
             </div>
             <div class="character">
                 <div class="leveldiv">
@@ -423,14 +456,14 @@
     
     <script>
         const baseStats = {
-            Health: [150, 10], Mana: [15, 5], Magic: [0, 1], Damage: [5, 1], Movespeed: [36, 1],
+            Health: [150, 5], Mana: [15, 5], Magic: [0, 1], Damage: [5, 1], Movespeed: [36, 1],
             Ability: [0, 1], "Attack Speed": [10, 1], "HP Regen": [2, 1], "MP Regen": [1, 1],
             Range: [15, 1], Armor: [0, 1], Defense: [0, 1], Capacity: [225, 25]
         };
         
         const classMultipliers = {
             Squire: { Health: 1, Mana: 1, Magic: 1, Ability: 1, "HP Regen": 1, "MP Regen": 1, Capacity: 1, "Attack Speed": 1, Armor: 1, Defense: 1 },
-            Knight: { Health: 2, Mana: 0.5, Magic: 0.5, Ability: 1.25, "HP Regen": 1.25, "MP Regen": 0.5, Capacity: 1.45, "Attack Speed": 1, Armor: 1.5, Defense: 1.5 },
+            Knight: { Health: 2, Mana: 0.5, Magic: 0.5, Ability: 1.25, "HP Regen": 1.25, "MP Regen": 0.5, Capacity: 1.5, "Attack Speed": 1, Armor: 1.5, Defense: 1.5 },
             Rogue: { Health: 1, Mana: 1.25, Magic: 1.5, Ability: 1.5, "HP Regen": 1, "MP Regen": 1, Capacity: 1, "Attack Speed": 1.25, Armor: 1, Defense: 1 },
             Mage: { Health: 0.75, Mana: 2, Magic: 2, Ability: 0.75, "HP Regen": 0.75, "MP Regen": 2, Capacity: 0.75, "Attack Speed": 1, Armor: 0.75, Defense: 0.75 }
         };
@@ -466,7 +499,7 @@
 ["Green Bag","bagslot","container",80,,,1,,,,,,,,,,"It has a blue gem in it.","GreenBag.png"],
 ["Ironsword","hand","sword",360,2,14,,,,2,,2,,,,6,"","Ironsword.png"],
 ["Kettle Helmet","head","heavyhelmet",350,,,,,3,,,,,,,,"","KettleHelmet.png"],
-["Knife","hand","dagger",80,,3,,,,,,3,,,,,"","Knife.png"],
+["Knife","hand","dagger",80,,3,,,,,,3,,,,2,"","Knife.png"],
 ["Leather Bascinet","head","lighthead",80,,,,,1,,,,,,,,"","LeatherBascinet.png"],
 ["Leather Boots","boots","lightboots",100,,,,,1,,,,,,,,"","LeatherBoots.png"],
 ["Leather Cloak","chest","lightchest",100,,,,,3,,,,,,,,"","LeatherCloak.png"],
@@ -675,14 +708,18 @@
                                 const itemName = headSlot.getAttribute('alt');
                                 const item = items.find(i => i[0] === itemName);
                                 if (!item || !item[2].includes("helmet")) {
+                                    console.log("Breeze in your hair: "+stage); //WHY IS THIS ADDING 10,20,30
+                                    console.log("Before"+traitBonuses.Movespeed);
                                     traitBonuses.Movespeed += stage;
+                                    console.log("After"+traitBonuses.Movespeed);
                                 }
                             }
                             break;
                         case "5": //lightfoot
                             const totalWeight = calculateItemBonuses().TotalWeight;
-                            if (totalWeight < 150) {
-                                traitBonuses.Movespeed += stage;
+                            //check if weight is below 150 and lightfoot trait is set to > 0
+                            if (totalWeight < 150 & parseInt(stage) > 0) {
+                                traitBonuses.Movespeed += parseInt(stage);
                             }
                             break;
                         case "6": //battle boots
@@ -1034,7 +1071,7 @@
                             case "21": // Hand Finesse
                             if(stage > 0){
                                 //Get total ability
-                                let ability = baseStats["Ability"][0] + baseStats["Ability"][1] * addedPoints["Ability"] + calculateItemBonuses().Ability;
+                                let ability = baseStats["Ability"][0] + baseStats["Ability"][1] * addedPoints["Ability"] + calculateItemBonuses().Ability + traitBonuses.Ability;
                                 //check how many times the stage fits into the ability
                                 const abilityFits = Math.min(5,parseInt(ability / stage));
                                 //add the bonus to attackspeed
@@ -1189,13 +1226,17 @@
                 let minDamage = 0;
                 let maxDamage = 0;
                 let damageRangeString = "";
+                let dpsString = ""
+                let dphValue = 0;
                 //Get current Ability skill * class multiplier + itembonuses to ability + trait bonuses to ability
                 let abilitySkill = (baseStats["Ability"][0] + baseStats["Ability"][1] * addedPoints["Ability"] + calculateItemBonuses().Ability + traitBonuses.Ability);
                 if(stat == "Damage"){
                     minDamage = (finalValue)/(5/(1+((abilitySkill*1.25)/100)));
                     maxDamage = (finalValue)*(1+(abilitySkill*1.25)/100);
-                    damageRangeString = " ("+minDamage.toFixed(0)+" - "+maxDamage.toFixed(0)+")";
+                    damageRangeString = '<span class="grey"> ('+minDamage.toFixed(0)+"-"+maxDamage.toFixed(0)+')</span>';
+                    dphValue = (minDamage + maxDamage) / 2;
                 }
+                    console.log("1 DPH: "+dphValue);
                 //Unnatural flow is unnatural
                 let extraMagicDamageString;
                 //if current stat = Damage and trait Unnatural Flow is active, add its stage to the Damage as an extra string in format "36 + 7", where 7 is Unnatural Flow's stage 2
@@ -1205,7 +1246,35 @@
                 // Add check for trait 24
                 let unnaturalFlowBonusString = "";
                 if (stat == "Damage" && selectedTraits["24"] && selectedTraits["24"] !== "0" && selectedTraits["24"] !== 0) {
-                    unnaturalFlowBonusString = " + " + selectedTraits["24"];
+                    unnaturalFlowBonusString = '<span class="purple">+' + selectedTraits["24"]+"</span>";
+                    dphValue += parseFloat(selectedTraits["24"]);
+                }
+                if(dphValue > 0){
+                    //get aTtackspeed value and class multiplier
+                    // UNKNOWN TYPES fix - JAVASCRIPT STInks bdfloibjdflbkdjfb
+                    let attackSpeed = (parseFloat(baseStats["Attack Speed"][0]) + parseFloat(baseStats["Attack Speed"][1]) * parseFloat(addedPoints["Attack Speed"]) + parseFloat(itemBonuses["Attack Speed"]) + parseFloat(traitBonuses["Attack Speed"])) * parseFloat(classMultipliers[selectedClass]["Attack Speed"]);
+                    /* //cool debug log
+                    console.log("3 base attack speed: "+baseStats["Attack Speed"][0]);
+                    console.log("3 base attack speed growth: "+baseStats["Attack Speed"][1]);
+                    console.log("3 added points in attack speed: "+addedPoints["Attack Speed"]);
+                    console.log("3 item bonus in attack speed: "+parseFloat(itemBonuses["Attack Speed"]));
+                    console.log("3 trait bonus in attack speed: "+parseFloat(traitBonuses["Attack Speed"]));
+                    console.log("3 class multiplier in attack speed: "+classMultipliers[selectedClass]["Attack Speed"]);
+                    console.log("3 Attack speed: "+attackSpeed);
+                    */
+                    if(attackSpeed < 1){
+                        attackSpeed = 1;
+                    }
+                    let attackInterval=2/(attackSpeed/10);
+                    let dpsValue = dphValue/attackInterval;
+                    // more cool debug
+                    /*
+                    console.log("4 Attack speed: "+attackSpeed);
+                    console.log("4 Attack interval: "+attackInterval);
+                    console.log("4 DPS: "+dpsValue);
+                    console.log("4 DPH: "+dphValue);
+                    */
+                    dpsString = '<span class="green"><span class="dps"> DPS: </span>'+dpsValue.toFixed(1)+'</span>';
                 }
                 
                 const row = `<div class="stat-container">
@@ -1218,7 +1287,7 @@
                     <div class="bonus ${bonuscolor}">${bonus.toFixed(2)}</div>
                     <div class="bonus ${itembonuscolor}">${itemBonus.toFixed(2)}</div>
                     <div class="bonus ${traitbonuscolor}">${traitBonus.toFixed(2)}</div>
-                    <div>${extraStringForCapacity}${finalValue.toFixed(0)}${damageRangeString}${extraMagicDamageString || ""}${unnaturalFlowBonusString}</div>
+                    <div>${extraStringForCapacity}${finalValue.toFixed(0)}${damageRangeString}${extraMagicDamageString || ""}${unnaturalFlowBonusString}${dpsString}</div>
                 </div>`;
                 
                 statTable.innerHTML += row;
@@ -1437,6 +1506,65 @@
             });
         }
         
+        function copyLink() {
+            const level = document.getElementById("level").value;
+            const characterClass = document.getElementById("class").value;
+            const itemSlots = Array.from(document.querySelectorAll('.item-slot img')).map(img => img.alt).join(',');
+            const addedPointsStr = Object.entries(addedPoints).map(([key, value]) => `${key}:${value}`).join(',');
+            const selectedTraitsStr = Object.entries(selectedTraits).map(([key, value]) => `${key}:${value}`).join(',');
+
+            const protocol = window.location.protocol === "file:" ? "file://" : window.location.origin;
+            const url = `${protocol}${window.location.pathname}?level=${level}&class=${characterClass}&items=${itemSlots.replace(/\s+/g, '')}&points=${addedPointsStr.replace(/\s+/g, '')}&traits=${selectedTraitsStr.replace(/\s+/g, '')}`;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Link copied to clipboard!');
+            });
+        }
+
+        function updateFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('level')) {
+                document.getElementById("level").value = params.get('level');
+            }
+            if (params.has('class')) {
+                selectClass(params.get('class'));
+            }
+            if (params.has('items')) {
+                const items = params.get('items').split(',');
+                document.querySelectorAll('.item-slot img').forEach((img, index) => {
+                    if (items[index]) {
+                        img.src = `Items/${items[index]}.png`;
+                        img.alt = items[index];
+                        img.style.display = 'block';
+                        setImageSize(img); // Ensure image size is set correctly
+                    }
+                });
+            }
+            if (params.has('points')) {
+                const points = params.get('points').split(',');
+                points.forEach(point => {
+                    const [stat, value] = point.split(':');
+                    addedPoints[stat] = parseInt(value);
+                });
+            }
+            if (params.has('traits')) {
+                const traits = params.get('traits').split(',');
+                traits.forEach(trait => {
+                    const [id, stage] = trait.split(':');
+                    selectedTraits[id] = stage;
+                    document.querySelectorAll(`.trait-stages button`).forEach(button => {
+                        if (button.textContent == stage) {
+                            button.classList.add('active');
+                        } else {
+                            button.classList.remove('active');
+                        }
+                    });
+                });
+            }
+            updateStats();
+        }
+
+        window.onload = updateFromUrl;
+
         updatePoints();
         selectClass('Squire');
         populateItemSlots();
