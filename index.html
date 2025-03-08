@@ -495,6 +495,7 @@
 ["Epee","hand","sword",180,2,19,,,,2,,3,,,,6,"A fencing sword.","Epee.png"],
 ["Euler Pants","legs","lightlegs",100,,,,2,4,,,,,,,,"","EulerPants.png"],
 ["Gambeson","chest","lightchest",300,,,,,5,,,,,10,,,"","Gambeson.png"],
+["Garnet Ring","ring","ring",120,,,,,,,1,,,,,,"","GarnetRing.png"],
 ["Golden Ring","ring","ring",7,,,,,,,,,,35,,,"","GoldenRing.png"],
 ["Green Bag","bagslot","container",80,,,1,,,,,,,,,,"It has a blue gem in it.","GreenBag.png"],
 ["Ironsword","hand","sword",360,2,14,,,,2,,2,,,,6,"","Ironsword.png"],
@@ -519,6 +520,7 @@
 ["Plated Shield","hand","heavyshield",800,,,,,,20,,,,,,4,"","PlatedShield.png"],
 ["Quoki Headgear","head","lightmask",45,,,,,,,,1,,-22,,,"Customary headpiece.","QuokiHeadgear.png"],
 ["Quoki Shoes","boots","lightboots",50,,,,,,,1,,,-25,,,"Customary footwear.","QuokiShoes.png"],
+["Red Orb","hand","orb",210,,10,5,,,3,,,,-75,,2,"Evil looks through it.","RedOrb.png"],
 ["Royal Armor","chest","heavychest",920,,,,,14,,,,,,,,"The royal cross is carved in its chest.","RoyalArmor.png"],
 ["Royal Dagger","hand","dagger",150,1,7,,2,,,,4,,,,2,"A bright gem shines in its hilt.","RoyalDagger.png"],
 ["Ruby Amulet","neck","necklace",15,,2,2,,,,,,,,,,"","RubyAmulet.png"],
@@ -535,9 +537,11 @@
 ["Studded Shield","hand","heavyshield",420,,,,,,15,,,,,,4,"","StuddedShield.png"],
 ["Torch","hand","sword?",50,,2,,,,,,,,,,,"","Torch.png"],
 ["Tower Shield","hand","heavyshield",690,,,,,,25,,,,,,4,"A royal shield.","TowerShield.png"],
+["Wizard Hat","head","lighthelmet",60,,,,1,1,,,,75,,,,"A pointy hat.","WizardHat.png"],
 ["Wooden Bow","hand","bow",290,47,15,,,,,,,,,,8,"","WoodenBow.png"],
 ["Wooden Shield","hand","heavyshield",250,,,,,,5,,,,,,4,"","WoodenShield.png"],
 ["Wooden Staff","hand","staff",300,32,5,,,,,,2,,,,8,"A simple piece of wood, however, curled weirdly.","WoodenStaff.png"],
+
 
 
 
@@ -1118,9 +1122,9 @@
                         case "23": // To Be Ninja
                             if (stage === "On") {
                                 //get total ability
-                                let extraAbility = baseStats["Ability"][1] * addedPoints["Ability"] + calculateItemBonuses().Ability;
+                                let extraAbility = calculateItemBonuses().Ability;//according to TUTZ, baseStats and addedPoints are not used for EXTRA
                                 //add the bonus to attackspeed
-                                traitBonuses["Attack Speed"] += extraAbility;
+                                traitBonuses["Attack Speed"] += extraAbility; 
                                 //traitBonuses.Ability -= extraAbility;
                             }
                             break;
