@@ -730,7 +730,7 @@
                             const leftHandSlot = document.querySelector('.item-slot[data-slot="hand"]:nth-of-type(4)');
                             const leftHandItem = items.find(i => i[0] === leftHandSlot.querySelector('img').getAttribute('alt'));
                             if (leftHandItem && leftHandItem[2] === "bow"){
-                                traitBonuses["Attack Speed"] += stage;
+                                traitBonuses["Attack Speed"] += parseInt(stage);
                             }
                             //check if bow is equipped in right hand
                             const rightHandSlot = document.querySelector('.item-slot[data-slot="hand"]:nth-of-type(6)');
@@ -761,7 +761,7 @@
                                 if (!item || !item[2].includes("helmet")) {
                                     console.log("Breeze in your hair: "+stage); //WHY IS THIS ADDING 10,20,30
                                     console.log("Before"+traitBonuses.Movespeed);
-                                    traitBonuses.Movespeed += stage;
+                                    traitBonuses.Movespeed += parseInt(stage);
                                     console.log("After"+traitBonuses.Movespeed);
                                 }
                             }
@@ -1175,7 +1175,7 @@
                             break;
                         case "24": // Unnatural Flow
                             if(stage > 0){
-                                traitBonuses.MagicDamage += stage;
+                                traitBonuses.MagicDamage += parseInt(stage);
                             }
                             break;
 
@@ -1552,6 +1552,7 @@
             traits.forEach(trait => {
                 const traitDiv = document.createElement('div');
                 traitDiv.classList.add('trait');
+                traitDiv.setAttribute('data-trait-id', trait[0]);
                 const traitInfo = document.createElement('div');
                 traitInfo.classList.add('trait-info');
                 const traitTitle = document.createElement('div');
@@ -1673,7 +1674,7 @@
                 traits.forEach(trait => {
                     const [id, stage] = trait.split(':');
                     selectedTraits[id] = stage;
-                    document.querySelectorAll(`.trait-stages button`).forEach(button => {
+                    document.querySelectorAll(`.trait[data-trait-id="${id}"] .trait-stages button`).forEach(button => {
                         if (button.textContent == stage) {
                             button.classList.add('active');
                         } else {
@@ -1687,12 +1688,12 @@
             updateStats();
         }
 
-        window.onload = updateFromUrl;
 
         updatePoints();
         selectClass('Squire');
         populateItemSlots();
         populateTraits();
+        window.onload = updateFromUrl;
     </script>
 </body>
 </html>
