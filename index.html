@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Stat Calculator</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         body {
             font-family: '9Px3bus-WpXV', Arial, sans-serif;
@@ -165,6 +166,24 @@
             height: 100%;
             display: block;
             margin: auto;
+            -webkit-filter: drop-shadow(0px 0px 5px #ffffff63);
+            filter: drop-shadow(0px 0px 5px #ffffff63);
+        }
+        img.uncommon, .selection-item img.uncommon{
+            -webkit-filter: drop-shadow(0px 0px 5px #23ff2e);
+            filter: drop-shadow(0px 0px 5px #23ff2e);
+        }
+        img.rare, .selection-item img.rare{
+            -webkit-filter: drop-shadow(0px 0px 5px #00ccff);
+            filter: drop-shadow(0px 0px 5px #00ccff);
+        }
+        img.epic, .selection-item img.epic{
+            -webkit-filter: drop-shadow(0px 0px 5px #f712eb);
+            filter: drop-shadow(0px 0px 5px #f712eb);
+        }
+        img.legendary, .selection-item img.legendary{
+            -webkit-filter: drop-shadow(0px 0px 5px #ffee01);
+            filter: drop-shadow(0px 0px 5px #ffee01);
         }
         .item-slot img.size-32, .selection-item img.size-32 {
             width: 48px;
@@ -184,7 +203,7 @@
             grid-template-rows: repeat(5, 48px);
             gap: 5px;
             margin-left: 20px;
-            width: 320px;
+            width: 340px;
             height: 300px;
             overflow-y: auto;
         }
@@ -201,6 +220,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        .selection-item img{
+            -webkit-filter: drop-shadow(0px 0px 5px #ffffff62);
+            filter: drop-shadow(0px 0px 5px #ffffff62);
         }
         .item-stats {
             width: 130px;
@@ -392,7 +415,7 @@
     <div class="main-content">
         <div>
             <div class="maintitle">
-                <div class="mainname"><label>Character Stat Calculator v0.3</label></div>
+                <div class="mainname"><label>Character Stat Calculator v0.4</label></div>
                 <div class="logo"><a href="https://www.youtube.com/@QuickApogean"><img src="quick_logo_compact.png"></a></div>
                 <div class="logo"><a href="https://store.steampowered.com/app/2796220/Apogea/"><img src="pixelartlogo.png"></a></div>
                 <div class="copylink">
@@ -470,85 +493,105 @@
         
         const items = [
             //comment the variable names
-            //name, slot, type, weight, range, damage, skill, magic, armor, defense, moveSpeed, attackSpeed, mana, health, timer, equipSize, description, image
-            ["Black Bag","bagslot","container",80,,,,,,,,,,,,,"","BlackBag.png"],
-["Blue Backpack","bagslot","container",160,,,,,,,,,,,,,"<empty>","BlueBackpack.png"],
-["Bone Bow","hand","bow",200,37,10,,,,,,4,,,,8,"A magic bow.","BoneBow.png"],
-["Bone Knife","hand","dagger",160,,9,,,,,,1,,,,3,"","BoneKnife.png"],
-["Brass Legs","legs","heavylegs",470,,,,,5,,,,,,,,"","BrassLegs.png"],
-["Brass Plate","chest","heavychest",790,,,,,10,,,,,,,,"","BrassPlate.png"],
-["Brass Shield","hand","lightshield",200,,,,,,15,,,,,,3,"Surprisingly light.","BrassShield.png"],
-["Brigandine Vest","chest","lightchest",580,,,2,,8,,,,,20,,,"","BrigandineVest.png"],
-["Broadsword","hand","sword",750,2,28,,,,7,,-2,,,,8,"","Broadsword.png"],
-["Buckler","hand","lightshield",160,,,,,,10,,,,,,3,"","Buckler.png"],
-["Burlap Hat","head","lighthelmet",100,,,-2,-2,1,,,,50,,,,"","BurlapHat.png"],
-["Chain Mail","chest","heavychest",810,,,,,8,,,,,,,,"","ChainMail.png"],
-["Cloth Pants","legs","lightlegs",80,,,,,1,,,,,,,,"","ClothPants.png"],
-["Cloth Vest","chest","lightchest",200,,,,,2,,,,,,,,"","ClothVest.png"],
-["Crowbar","hand","tools",130,,3,,,,,,,,,,4,"","Crowbar.png"],
-["Crystal Ring","ring","ring",8,,,,2,,,,,,,,,"","CrystalRing.png"],
-["Crystal Staff","hand","staff",200,37,10,,,,,,1,,,,8,"A light staff.","CrystalStaff.png"],
-["Cutlass","hand","sword",450,2,25,,,,3,,3,,,,6,"A sailor’s sword.","Cutlass.png"],
-["Dark Hood","head","lighthelmet",60,,,3,,2,,,,,-10,,,"A hood longs for life.","DarkHood.png"],
-["Dark Robe","chest","lightchest",160,,,,4,4,,,,,-35,,,"The robe longs for life.","DarkRobe.png"],
-["Druid Hat","head","lighthelmet",95,,,,1,3,,,,,40,,,"","DruidHat.png"],
-["Epee","hand","sword",180,2,19,,,,2,,3,,,,6,"A fencing sword.","Epee.png"],
-["Euler Pants","legs","lightlegs",100,,,,2,4,,,,,,,,"","EulerPants.png"],
-["Gambeson","chest","lightchest",300,,,,,5,,,,,10,,,"","Gambeson.png"],
-["Garnet Ring","ring","ring",120,,,,,,,1,,,,,,"","GarnetRing.png"],
-["Golden Ring","ring","ring",7,,,,,,,,,,35,,,"","GoldenRing.png"],
-["Green Bag","bagslot","container",80,,,1,,,,,,,,,,"It has a blue gem in it.","GreenBag.png"],
-["Ironsword","hand","sword",360,2,14,,,,2,,2,,,,6,"","Ironsword.png"],
-["Kettle Helmet","head","heavyhelmet",350,,,,,3,,,,,,,,"","KettleHelmet.png"],
-["Knife","hand","dagger",80,,3,,,,,,3,,,,2,"","Knife.png"],
-["Leather Bascinet","head","lighthead",80,,,,,1,,,,,,,,"","LeatherBascinet.png"],
-["Leather Boots","boots","lightboots",100,,,,,1,,,,,,,,"","LeatherBoots.png"],
-["Leather Cloak","chest","lightchest",100,,,,,3,,,,,,,,"","LeatherCloak.png"],
-["Leather Coif","head","lighthead",140,,3,,,4,,,,,,,,"","LeatherCoif.png"],
-["Leather Collar","neck","lightneck",200,,,,,2,,,,,,,,"","LeatherCollar.png"],
-["Leather Cuisse","legs","lightlegs",290,,,,,2,,,,,,,,"","LeatherCuisse.png"],
-["Leather Gloves","hand","gloves",150,,,,,,,,,,,,2,"","LeatherGloves.png"],
-["Longbow","hand","bow",370,57,20,,,,,,-1,,,,9,"","Longbow.png"],
-["Longsword","hand","sword",980,7,40,,,,10,,-2,,,,8,"","Longsword.png"],
-["Magician Hat","head","lighthelmet",100,,,,3,2,,,,,,,,"","MagicianHat.png"],
-["Merchant’s Bag","bagslot","container",550,,,,,,,,,,10,,,"","MerchantsBag.png"],
-["Nightshade Robe","chest","lightchest",175,,,-5,1,7,,,,,,,,"The robe makes you feel lighter.","NightshadeRobe.png"],
-["Old Gloves","hand","gloves",100,,2,2,,,,,,,,,1,"","OldGloves.png"],
-["Orb","hand","orb",190,,,,2,,2,,,,,,2,"A magical orb.","Orb.png"],
-["Plated Cuirass","chest","heavychest",1050,,,,,12,,,,,,,,"","PlatedCuirass.png"],
-["Plated Helmet","head","heavyhelmet",350,,,,,6,,,,,,,,"","PlatedHelmet.png"],
-["Plated Shield","hand","heavyshield",800,,,,,,20,,,,,,4,"","PlatedShield.png"],
-["Quoki Headgear","head","lightmask",45,,,,,,,,1,,-22,,,"Customary headpiece.","QuokiHeadgear.png"],
-["Quoki Shoes","boots","lightboots",50,,,,,,,1,,,-25,,,"Customary footwear.","QuokiShoes.png"],
-["Red Orb","hand","orb",210,,10,5,,,3,,,,-75,,2,"Evil looks through it.","RedOrb.png"],
-["Royal Armor","chest","heavychest",920,,,,,14,,,,,,,,"The royal cross is carved in its chest.","RoyalArmor.png"],
-["Royal Dagger","hand","dagger",150,1,7,,2,,,,4,,,,2,"A bright gem shines in its hilt.","RoyalDagger.png"],
-["Ruby Amulet","neck","necklace",15,,2,2,,,,,,,,,,"","RubyAmulet.png"],
-["Rusty Sword","hand","sword",300,2,9,,,,2,,2,,,,6,"","RustySword.png"],
-["Scarf","neck","lightneck",75,,,,,1,,,,,,,,"A very thick scarf.","Scarf.png"],
-["Shovel","hand","sword?",260,,8,,,,2,,,,,,6,"Used to open holes.","Shovel.png"],
-["Silver Amulet","neck","necklace",20,,,,,,,,,35,,,,"","SilverAmulet.png"],
-["Silver Dagger","hand","dagger",70,,4,,,,,,4,,,,2,"For rituals.","SilverDagger.png"],
-["Silver Ring","ring","ring",10,,,,,,,,,15,,,,"","SilverRing.png"],
-["Simple Bag","bagslot","container",80,,,,,,,,,,,,,"","SimpleBag.png"],
-["Spangenhelm","head","heavyhelmet",400,,,,,5,,,,,,,,"","Spangenhelm.png"],
-["Square Bag","bagslot","container",100,,,,1,,,,,,,,,"","SquareBag.png"],
-["Stone Shortbow","hand","bow",330,37,25,,,,,,,,,,8,"A sturdy small bow.","StoneShortbow.png"],
-["Studded Shield","hand","heavyshield",420,,,,,,15,,,,,,4,"","StuddedShield.png"],
-["Torch","hand","sword?",50,,2,,,,,,,,,,,"","Torch.png"],
-["Tower Shield","hand","heavyshield",690,,,,,,25,,,,,,4,"A royal shield.","TowerShield.png"],
-["Wizard Hat","head","lighthelmet",60,,,,1,1,,,,75,,,,"A pointy hat.","WizardHat.png"],
-["Wooden Bow","hand","bow",290,47,15,,,,,,,,,,8,"","WoodenBow.png"],
-["Wooden Shield","hand","heavyshield",250,,,,,,5,,,,,,4,"","WoodenShield.png"],
-["Wooden Staff","hand","staff",300,32,5,,,,,,2,,,,8,"A simple piece of wood, however, curled weirdly.","WoodenStaff.png"],
-
-
+            //name, slot, type, weight, range, damage, HP, Mp, skill, magic, armor, defense, moveSpeed, attackSpeed, emptyholder, equipSize, description, image
+            ["Black Bag","bagslot","container",80,,,,,,,,,,,,,,,"","BlackBag.png",""],
+["Blue Backpack","bagslot","container",160,,,,,,,,,,,,,,,"<empty>","BlueBackpack.png",""],
+["Bone Bow","hand","bow",200,37,10,,,,,,,,4,,8,,,"A magic bow.","BoneBow.png",""],
+["Bone Knife","hand","dagger",160,,9,,,,,,,,1,,3,,,"","BoneKnife.png",""],
+["Brass Legs","legs","heavylegs",470,,,,,,,5,,,,,,,,"","BrassLegs.png",""],
+["Brass Plate","chest","heavychest",790,,,,,,,10,,,,,,,,"","BrassPlate.png",""],
+["Brass Shield","hand","lightshield",200,,,,,,,,15,,,,3,,,"Surprisingly light.","BrassShield.png",""],
+["Brigandine Vest","chest","lightchest",580,,,20,,2,,8,,,,,,,,"","BrigandineVest.png",""],
+["Broadsword","hand","sword",750,2,28,,,,,,7,,-2,,8,,,"","Broadsword.png",""],
+["Buckler","hand","lightshield",160,,,,,,,,10,,,,3,,,"","Buckler.png",""],
+["Burlap Hat","head","lighthelmet",100,,,,50,-2,-2,1,,,,,,,,"","BurlapHat.png",""],
+["Chain Mail","chest","heavychest",810,,,,,,,8,,,,,,,,"","ChainMail.png",""],
+["Cloth Pants","legs","lightlegs",80,,,,,,,1,,,,,,,,"","ClothPants.png",""],
+["Cloth Vest","chest","lightchest",200,,,,,,,2,,,,,,,,"","ClothVest.png",""],
+["Cloth Vest","chest","lightchest",160,,,,,,,2,,,,,,,,"","ClothVest.png","uncommon"],
+["Cloth Vest","chest","lightchest",140,,,,,,,3,,,,,,,,"","ClothVest.png","rare"],
+["Cloth Vest","chest","lightchest",120,,,,,,,3,,,,,,,,"","ClothVest.png","epic"],
+["Cloth Vest","chest","lightchest",100,,,,,,,3,,,,,,,,"","ClothVest.png","legendary"],
+["Crowbar","hand","tools",130,,3,,,,,,,,,,4,,,"","Crowbar.png",""],
+["Crystal Ring","ring","ring",8,,,,,,2,,,,,,,,,"","CrystalRing.png",""],
+["Crystal Staff","hand","staff",200,37,10,,,,,,,,1,,8,,,"A light staff.","CrystalStaff.png",""],
+["Crystal Staff","hand","staff",160,42,12,,,,,,,,1,,8,,,"A light staff.","CrystalStaff.png","uncommon"],
+["Crystal Staff","hand","staff",140,44,13,,,,,,,,2,,8,,,"A light staff.","CrystalStaff.png","rare"],
+["Cutlass","hand","sword",450,2,25,,,,,,3,,3,,6,,,"A sailor’s sword.","Cutlass.png",""],
+["Dark Hood","head","lighthelmet",60,,,-10,,3,,2,,,,,,,,"A hood longs for life.","DarkHood.png",""],
+["Dark Robe","chest","lightchest",160,,,-35,,,4,4,,,,,,,,"The robe longs for life.","DarkRobe.png",""],
+["Druid Hat","head","lighthelmet",95,,,40,,,1,3,,,,,,,,"","DruidHat.png",""],
+["Epee","hand","sword",180,2,19,,,,,,2,,3,,6,,,"A fencing sword.","Epee.png",""],
+["Euler Pants","legs","lightlegs",100,,,,,,2,4,,,,,,,,"","EulerPants.png",""],
+["Gambeson","chest","lightchest",300,,,10,,,,5,,,,,,,,"","Gambeson.png",""],
+["Garnet Ring","ring","ring",120,,,,,,,,,1,,,,,,"","GarnetRing.png",""],
+["Golden Ring","ring","ring",7,,,35,,,,,,,,,,,,"","GoldenRing.png",""],
+["Green Bag","bagslot","container",80,,,,,1,,,,,,,,,,"It has a blue gem in it.","GreenBag.png",""],
+["Ironsword","hand","sword",360,2,14,,,,,,2,,2,,6,,,"","Ironsword.png",""],
+["Ironsword","hand","sword",288,2,16,,,,,,2,,2,,6,,,"","Ironsword.png","uncommon"],
+["Ironsword","hand","sword",252,2,18,,,,,,3,,3,,6,,,"","Ironsword.png","rare"],
+["Ironsword","hand","sword",216,2,19,,,,,,4,,4,,6,,,"","Ironsword.png","epic"],
+["Kettle Helmet","head","heavyhelmet",350,,,,,,,3,,,,,,,,"","KettleHelmet.png",""],
+["Knife","hand","dagger",80,,3,,,,,,,,3,,2,,,"","Knife.png",""],
+["Knife","hand","dagger",64,,3,,,,,,,,3,,2,,,"","Knife.png","uncommon"],
+["Knife","hand","dagger",56,,4,,,,,,,,4,,2,,,"","Knife.png","rare"],
+["Knife","hand","dagger",48,,5,,,,,,,,5,,2,,,"","Knife.png","epic"],
+["Knife","hand","dagger",40,1,6,,,,,,,,6,,2,,,"","Knife.png","legendary"],
+["Leather Bascinet","head","lighthead",80,,,,,,,1,,,,,,,,"","LeatherBascinet.png",""],
+["Leather Boots","boots","lightboots",100,,,,,,,1,,,,,,,,"","LeatherBoots.png",""],
+["Leather Cloak","chest","lightchest",100,,,,,,,3,,,,,,,,"","LeatherCloak.png",""],
+["Leather Coif","head","lighthead",140,,3,,,,,4,,,,,,,,"","LeatherCoif.png",""],
+["Leather Collar","neck","lightneck",200,,,,,,,2,,,,,,,,"","LeatherCollar.png",""],
+["Leather Cuisse","legs","lightlegs",290,,,,,,,2,,,,,,,,"","LeatherCuisse.png",""],
+["Leather Gloves","hand","gloves",150,,3,,,4,,1,,,,,1,,,"","LeatherGloves.png",""],
+["Longbow","hand","bow",370,57,20,,,,,,,,-1,,9,,,"","Longbow.png",""],
+["Longsword","hand","sword",980,7,38,,,,,,10,,-2,,8,,,"","Longsword.png",""],
+["Magician Hat","head","lighthelmet",100,,,,,,3,2,,,,,,,,"","MagicianHat.png",""],
+["Merchant’s Bag","bagslot","container",550,,,10,,,,,,,,,,,,"","MerchantsBag.png",""],
+["Nightshade Robe","chest","lightchest",175,,,,,-5,1,7,,,,,,,,"The robe makes you feel lighter.","NightshadeRobe.png",""],
+["Old Gloves","hand","gloves",100,,2,,,2,,,,,,,1,,,"","OldGloves.png",""],
+["Orb","hand","orb",190,,,,,,2,,2,,,,2,,,"A magical orb.","Orb.png",""],
+["Pestilence Sword","hand","sword",850,6,50,,50,-6,4,,7,,-1,,8,,,"A magic sword.","PestilenceSword.png",""],
+["Plated Cuirass","chest","heavychest",1050,,,,,,,12,,,,,,,,"","PlatedCuirass.png",""],
+["Plated Helmet","head","heavyhelmet",350,,,,,,,6,,,,,,,,"","PlatedHelmet.png",""],
+["Plated Shield","hand","heavyshield",800,,,,,,,,20,,,,4,,,"","PlatedShield.png",""],
+["Quoki Headgear","head","lightmask",45,,,-22,,,,,,,1,,,,,"Customary headpiece.","QuokiHeadgear.png",""],
+["Quoki Shoes","boots","lightboots",50,,,-25,,,,,,1,,,,,,"Customary footwear.","QuokiShoes.png",""],
+["Red Orb","hand","orb",210,,10,-75,,5,,,3,,,,2,,,"Evil looks through it.","RedOrb.png",""],
+["Royal Armor","chest","heavychest",920,,,,,,,14,,,,,,,,"The royal cross is carved in its chest.","RoyalArmor.png",""],
+["Royal Dagger","hand","dagger",150,1,7,,,,2,,,,4,,2,,,"A bright gem shines in its hilt.","RoyalDagger.png",""],
+["Ruby Amulet","neck","necklace",15,,2,,,2,,,,,,,,,,"","RubyAmulet.png",""],
+["Rusty Sword","hand","sword",300,2,9,,,,,,2,,2,,6,,,"","RustySword.png",""],
+["Scarf","neck","lightneck",75,,,,,,,1,,,,,,,,"A very thick scarf.","Scarf.png",""],
+["Shovel","hand","sword?",260,,8,,,,,,2,,,,6,,,"Used to open holes.","Shovel.png",""],
+["Silver Amulet","neck","necklace",20,,,,35,,,,,,,,,,,"","SilverAmulet.png",""],
+["Silver Dagger","hand","dagger",70,,4,,,,,,,,4,,2,,,"For rituals.","SilverDagger.png",""],
+["Silver Ring","ring","ring",10,,,,15,,,,,,,,,,,"","SilverRing.png",""],
+["Simple Bag","bagslot","container",80,,,,,,,,,,,,,,,"","SimpleBag.png",""],
+["Spangenhelm","head","heavyhelmet",400,,,,,,,5,,,,,,,,"","Spangenhelm.png",""],
+["Square Bag","bagslot","container",100,,,,,,1,,,,,,,,,"","SquareBag.png",""],
+["Stone Shortbow","hand","bow",330,37,25,,,,,,,,,,8,,,"A sturdy small bow.","StoneShortbow.png",""],
+["Studded Shield","hand","heavyshield",420,,,,,,,,15,,,,4,,,"","StuddedShield.png",""],
+["Torch","hand","sword?",50,,2,,,,,,,,,,,,,"","Torch.png",""],
+["Tower Shield","hand","heavyshield",690,,,,,,,,25,,,,4,,,"A royal shield.","TowerShield.png",""],
+["Winged Boots","boots","lightboots",100,,,,,,,,-10,5,,,,,,"These loose boots seem to make you lighter.","WingedBoots.png",""],
+["Wizard Hat","head","lighthelmet",60,,,,75,,1,1,,,,,,,,"A pointy hat.","WizardHat.png",""],
+["Wooden Bow","hand","bow",290,47,15,,,,,,,,,,8,,,"","WoodenBow.png",""],
+["Wooden Shield","hand","heavyshield",250,,,,,,,,5,,,,4,,,"","WoodenShield.png",""],
+["Wooden Staff","hand","staff",300,32,5,,,,,,,,2,,8,,,"A simple piece of wood, however, curled weirdly.","WoodenStaff.png",""],
+["Stone Wand","hand","staff",900,37,13,,,,,,,,2,,8,,,"Tight on grip.","StoneWand.png",""],
 
 
 
 
         ];
-        
+        console.log("TEST ITEM 0"+items[5][0]);
+        console.log("TEST ITEM 1"+items[5][1]);
+        console.log("TEST ITEM 15"+items[5][15]);
+        console.log("TEST ITEM 16"+items[5][16]);
+        console.log("TEST ITEM 17"+items[5][17]);
+        console.log("TEST ITEM 18"+items[5][18]);
+        console.log("TEST ITEM 19"+items[5][19]);
         const traits = [
             [0, "Double Danger", "Using two daggers doubles your Item Damage", ["Off", "On"]],
             [1, "Bow Guidance", "Bows have extra Attackspeed", [0, 1, 2, 3, 4, 6]],
@@ -628,20 +671,24 @@
             const itemSlots = document.querySelectorAll('.item-slot img');
             itemSlots.forEach(img => {
                 const itemName = img.getAttribute('alt');
-                const item = items.find(i => i[0] === itemName);
+                const rarity = img.classList.contains('uncommon') ? 'uncommon' :
+                               img.classList.contains('rare') ? 'rare' :
+                               img.classList.contains('epic') ? 'epic' :
+                               img.classList.contains('legendary') ? 'legendary' : 'common';
+                const item = items.find(i => i[0] === itemName && (i[20] === rarity || (!i[20] && rarity === 'common')));
                 if (item) {
-                    itemBonuses.Health += item[13] || 0;
-                    itemBonuses.Mana += item[12] || 0;
-                    itemBonuses.Magic += item[7] || 0;
+                    itemBonuses.Health += item[6] || 0;
+                    itemBonuses.Mana += item[7] || 0;
+                    itemBonuses.Magic += item[9] || 0;
                     itemBonuses.Damage += item[5] || 0;
-                    itemBonuses.Movespeed += item[10] || 0;
-                    itemBonuses.Ability += item[6] || 0;
-                    itemBonuses["Attack Speed"] += item[11] || 0;
-                    itemBonuses["HP Regen"] += 0 || 0;
-                    itemBonuses["MP Regen"] += 0 || 0;
+                    itemBonuses.Movespeed += item[12] || 0;
+                    itemBonuses.Ability += item[8] || 0;
+                    itemBonuses["Attack Speed"] += item[13] || 0;
+                    itemBonuses["HP Regen"] += item[16] || 0;
+                    itemBonuses["MP Regen"] += item[17] || 0;
                     itemBonuses.Range += item[4] || 0;
-                    itemBonuses.Armor += item[8] || 0;
-                    itemBonuses.Defense += item[9] || 0;
+                    itemBonuses.Armor += item[10] || 0;
+                    itemBonuses.Defense += item[11] || 0;
                     itemBonuses.Capacity += item[15] || 0;
                     itemBonuses.TotalWeight += item[3]/10 || 0;
                     //if item is light armor and cozy and useful is active, reduce weight
@@ -693,7 +740,7 @@
                             }
                             break;
                         case "2": //Goo dtechnique
-                            traitBonuses.Range += stage;
+                            traitBonuses.Range += parseInt(stage);
                             break;
                         case "3": // Cozy and Useful
                             const lightArmorSlots = document.querySelectorAll('.item-slot img');
@@ -789,44 +836,43 @@
                                         //THIS IS HELL
                                         //NO RETURN
                                         
-            //0 name, 1 slot, 2 type, 3 weight, 4 range, 5damage, 6skill, 7magic, 8armor, 9defense, 10moveSpeed, 11attackSpeed, 12mana, 13health, 14timer??, 15equipSize, 16description, image
+            //0 name, 1 slot, 2 type, 3 weight, 4 range, 5damage, 6 HP, 7 MANA, 8 Ability, 9 magic, 10 armor, 11 defense, 12 moveSpeed, 13 attackSpeed, 14 empty, 15 equip size, 16-hpreg, 17 mp reg, 18description, image
 
                                         if (item[4] < 0) {
-                                            traitBonuses.Range += Math.abs(item[5]);
+                                            traitBonuses.Range += Math.abs(item[4]);
                                         }
                                         if (item[5] < 0) {
                                             traitBonuses.Damage += Math.abs(item[5]);
                                         }
                                         if (item[6] < 0) {
-                                            traitBonuses.Ability += Math.abs(item[6]);
+                                            traitBonuses.Health += Math.abs(item[6]);
                                         }
                                         if (item[7] < 0) {
-                                            traitBonuses.Magic += Math.abs(item[7]);
+                                            traitBonuses.Mana += Math.abs(item[7]);
                                         }
                                         if (item[8] < 0) {
-                                            traitBonuses.Armor += Math.abs(item[8]);
+                                            traitBonuses.Ability += Math.abs(item[8]);
                                         }
                                         if (item[9] < 0) {
-                                            traitBonuses.Defense += Math.abs(item[9]);
+                                            traitBonuses.Magic += Math.abs(item[9]);
                                         }
                                         if (item[10] < 0) {
-                                            traitBonuses.Movespeed += Math.abs(item[10]);
+                                            traitBonuses.Armor += Math.abs(item[10]);
                                         }
                                         if (item[11] < 0) {
-                                            traitBonuses["Attack Speed"] += Math.abs(item[11]);
+                                            traitBonuses.Defense += Math.abs(item[11]);
                                         }
                                         if (item[12] < 0) {
-                                            traitBonuses.Mana += Math.abs(item[12]);
+                                            traitBonuses.Movespeed += Math.abs(item[12]);
                                         }
-                                        /*
-                                        if (item[11] < 0) {
-                                            traitBonuses["HP Regen"] += Math.abs(item[11]);
-                                        }
-                                        if (item[12] < 0) {
-                                            traitBonuses["MP Regen"] += Math.abs(item[12]);
-                                        }*/ //NO REGEN ON ITEMS YET 
                                         if (item[13] < 0) {
-                                            traitBonuses.Health += Math.abs(item[13]);
+                                            traitBonuses["Attack Speed"] += Math.abs(item[13]);
+                                        }
+                                        if (item[16] < 0) {
+                                            traitBonuses["HP Regen"] += Math.abs(item[16]);
+                                        }
+                                        if (item[17] < 0) {
+                                            traitBonuses["MP Regen"] += Math.abs(item[17]);
                                         }
                                         magicBonus += 0.05;
                                     }
@@ -943,41 +989,40 @@
                                         //THIS IS HELL
                                         //NO RETURN
                                         if (item[4] < 0) {
-                                            traitBonuses.Range += Math.abs(item[5]);
+                                            traitBonuses.Range += Math.abs(item[4]);
                                         }
                                         if (item[5] < 0) {
                                             traitBonuses.Damage += Math.abs(item[5]);
                                         }
                                         if (item[6] < 0) {
-                                            traitBonuses.Ability += Math.abs(item[6]);
+                                            traitBonuses.Health += Math.abs(item[6]);
                                         }
                                         if (item[7] < 0) {
-                                            traitBonuses.Magic += Math.abs(item[7]);
+                                            traitBonuses.Mana += Math.abs(item[7]);
                                         }
                                         if (item[8] < 0) {
-                                            traitBonuses.Armor += Math.abs(item[8]);
+                                            traitBonuses.Ability += Math.abs(item[8]);
                                         }
                                         if (item[9] < 0) {
-                                            traitBonuses.Defense += Math.abs(item[9]);
+                                            traitBonuses.Magic += Math.abs(item[9]);
                                         }
                                         if (item[10] < 0) {
-                                            traitBonuses.Movespeed += Math.abs(item[10]);
+                                            traitBonuses.Armor += Math.abs(item[10]);
                                         }
                                         if (item[11] < 0) {
-                                            traitBonuses["Attack Speed"] += Math.abs(item[11]);
+                                            traitBonuses.Defense += Math.abs(item[11]);
                                         }
                                         if (item[12] < 0) {
-                                            traitBonuses.Mana += Math.abs(item[12]);
+                                            traitBonuses.Movespeed += Math.abs(item[12]);
                                         }
-                                        /*
-                                        if (item[11] < 0) {
-                                            traitBonuses["HP Regen"] += Math.abs(item[11]);
-                                        }
-                                        if (item[12] < 0) {
-                                            traitBonuses["MP Regen"] += Math.abs(item[12]);
-                                        }*/ //NO REGEN ON ITEMS YET 
                                         if (item[13] < 0) {
-                                            traitBonuses.Health += Math.abs
+                                            traitBonuses["Attack Speed"] += Math.abs(item[13]);
+                                        }
+                                        if (item[16] < 0) {
+                                            traitBonuses["HP Regen"] += Math.abs(item[16]);
+                                        }
+                                        if (item[17] < 0) {
+                                            traitBonuses["MP Regen"] += Math.abs(item[17]);
                                         }
                                         
                                         manaBonus += 15;
@@ -1163,7 +1208,9 @@
                 const multiplier = classMultipliers[selectedClass][stat] || 1;
                 const bonus = added * growth;// * multiplier;
                 const itemBonus = itemBonuses[stat] || 0;
+                console.log("stat"+stat);
                 const traitBonus = traitBonuses[stat] || 0;
+                console.log("TRAIT BONUS:"+traitBonus);
                 let bonuscolor;
                 let itembonuscolor;
                 let traitbonuscolor;
@@ -1305,7 +1352,9 @@
                     */
                     dpsString = '<span class="green"><span class="dps"> DPS: </span>'+dpsValue.toFixed(1)+'</span>';
                 }
-                
+                console.log("stat: "+stat);
+                console.log("itemBonus "+itemBonus);
+                console.log("traitBonus "+traitBonus);
                 const row = `<div class="stat-container">
                     <div>${stat}</div>
                     <div>${baseValue}</div>
@@ -1339,23 +1388,24 @@
             
             function showItemStats(item) {
                 let statsHtml = `<strong>${item[0]}</strong><br>`;
-                if (item[16]) statsHtml += `<span class="description">${item[16]}</span><br>`;
+                if (item[18]) statsHtml += `<span class="description">${item[18]}</span><br>`;
                 if (item[2]) statsHtml += `Type: ${item[2]}<br>`;
-                //If value is negative, change color to red
-                //If positive, go green
                 if (item[4]) statsHtml += `<span class="${item[4] < 0 ? 'red' : 'green'}">Range: ${item[4]}</span><br>`;
                 if (item[5]) statsHtml += `<span class="${item[5] < 0 ? 'red' : 'green'}">Damage: ${item[5]}</span><br>`;
-                if (item[6]) statsHtml += `<span class="${item[6] < 0 ? 'red' : 'green'}">Ability: ${item[6]}</span><br>`;
-                if (item[7]) statsHtml += `<span class="${item[7] < 0 ? 'red' : 'green'}">Magic: ${item[7]}</span><br>`;
-                if (item[8]) statsHtml += `<span class="${item[8] < 0 ? 'red' : 'green'}">Armor: ${item[8]}</span><br>`;
-                if (item[9]) statsHtml += `<span class="${item[9] < 0 ? 'red' : 'green'}">Defense: ${item[9]}</span><br>`;
-                if (item[10]) statsHtml += `<span class="${item[10] < 0 ? 'red' : 'green'}">Move Speed: ${item[10]}</span><br>`;
-                if (item[11]) statsHtml += `<span class="${item[11] < 0 ? 'red' : 'green'}">Attack Speed: ${item[11]}</span><br>`;
-                if (item[12]) statsHtml += `<span class="${item[12] < 0 ? 'red' : 'green'}">Mana: ${item[12]}</span><br>`;
-                if (item[13]) statsHtml += `<span class="${item[13] < 0 ? 'red' : 'green'}">Health: ${item[13]}</span><br>`;
-                if (item[14]) statsHtml += `Timer: ${item[14]}<br>`;
+                if (item[6]) statsHtml += `<span class="${item[6] < 0 ? 'red' : 'green'}">Health: ${item[6]}</span><br>`;
+                if (item[7]) statsHtml += `<span class="${item[7] < 0 ? 'red' : 'green'}">Mana: ${item[7]}</span><br>`;
+                if (item[8]) statsHtml += `<span class="${item[8] < 0 ? 'red' : 'green'}">Ability: ${item[8]}</span><br>`;
+                if (item[9]) statsHtml += `<span class="${item[9] < 0 ? 'red' : 'green'}">Magic: ${item[9]}</span><br>`;
+                if (item[10]) statsHtml += `<span class="${item[10] < 0 ? 'red' : 'green'}">Armor: ${item[10]}</span><br>`;
+                if (item[11]) statsHtml += `<span class="${item[11] < 0 ? 'red' : 'green'}">Defense: ${item[11]}</span><br>`;
+                if (item[12]) statsHtml += `<span class="${item[12] < 0 ? 'red' : 'green'}">Move Speed: ${item[12]}</span><br>`;
+                if (item[13]) statsHtml += `<span class="${item[13] < 0 ? 'red' : 'green'}">Attack Speed: ${item[13]}</span><br>`;
+                if (item[16]) statsHtml += `<span class="${item[16] < 0 ? 'red' : 'green'}">HP Regen: ${item[16]}</span><br>`;
+                if (item[17]) statsHtml += `<span class="${item[17] < 0 ? 'red' : 'green'}">MP Regen: ${item[17]}</span><br>`;
+                if (item[14]) statsHtml += `[temp]: ${item[14]}<br>`;
                 if (item[15]) statsHtml += `Equip Size: ${item[15]}/10<br>`;
                 if (item[3]) statsHtml += `It weighs ${(item[3]/10).toFixed(1)} oz.<br>`;
+                if (item[20]) statsHtml += `Rarity: ${item[20]}<br>`;
                 itemStats.innerHTML = statsHtml;
             }
             
@@ -1418,14 +1468,18 @@
                             const selectionItem = document.createElement('div');
                             selectionItem.classList.add('selection-item');
                             const img = document.createElement('img');
-                            img.src = `Items/${item[17]}`;
+                            if(item[19]) img.src = `Items/${item[19]}`;
                             img.alt = `${item[0]}`;
+                            img.classList.remove('uncommon','rare','epic','legendary');
+                            if (item[20]) img.classList.add(item[20]);
                             setImageSize(img);
                             selectionItem.appendChild(img);
                             selectionItem.addEventListener('click', function() {
                                 const slotImg = slot.querySelector('img');
-                                slotImg.src = `Items/${item[17]}`;
+                                if(item[19]) slotImg.src = `Items/${item[19]}`;
                                 slotImg.alt = item[0];
+                                slotImg.classList.remove('uncommon','rare','epic','legendary');
+                                if (item[20]) slotImg.classList.add(item[20]);
                                 slotImg.style.display = 'block';
                                 setImageSize(slotImg);
                                 selectionGrid.classList.remove('active');
@@ -1539,7 +1593,13 @@
             const level = document.getElementById("level").value;
             const characterClass = document.getElementById("class").value;
             const availablePoints = document.getElementById("available-points").textContent;
-            const itemSlots = Array.from(document.querySelectorAll('.item-slot img')).map(img => img.alt).join(',');
+            const itemSlots = Array.from(document.querySelectorAll('.item-slot img')).map(img => {
+                const rarity = img.classList.contains('uncommon') ? 'uncommon' :
+                               img.classList.contains('rare') ? 'rare' :
+                               img.classList.contains('epic') ? 'epic' :
+                               img.classList.contains('legendary') ? 'legendary' : 'common';
+                return `${img.alt}:${rarity}`;
+            }).join(',');
             const addedPointsStr = Object.entries(addedPoints).map(([key, value]) => `${key}:${value}`).join(',');
             const selectedTraitsStr = Object.entries(selectedTraits).map(([key, value]) => `${key}:${value}`).join(',');
 
@@ -1582,10 +1642,14 @@
                 const items = params.get('items').split(',');
                 document.querySelectorAll('.item-slot img').forEach((img, index) => {
                     if (items[index]) {
-                        img.src = `Items/${items[index].replace(" ","")}.png`;
-                        img.alt = items[index].replace("\%20","");
-                        img.style.display = 'block';
-                        setImageSize(img); // Ensure image size is set correctly
+                        const [itemName, rarity] = items[index].split(':');
+                        if(itemName !== ""){
+                            img.src = `Items/${itemName.replace(" ","")}.png`;
+                            img.alt = itemName.replace("\%20","");
+                            img.style.display = 'block';
+                            if (rarity) img.classList.add(rarity);
+                            setImageSize(img); // Ensure image size is set correctly
+                        }
                     }
                 });
             }
@@ -1593,7 +1657,15 @@
                 const points = params.get('points').split(',');
                 points.forEach(point => {
                     const [stat, value] = point.split(':');
-                    addedPoints[stat] = parseInt(value);
+                    if (stat === "HPRegen") {
+                        addedPoints["HP Regen"] = parseInt(value);
+                    }
+                    else if (stat === "MPRegen") {
+                        addedPoints["MP Regen"] = parseInt(value);
+                    }
+                    else {
+                        addedPoints[stat] = parseInt(value);
+                    }
                 });
             }
             if (params.has('traits')) {
