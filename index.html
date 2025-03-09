@@ -619,6 +619,7 @@ body::-webkit-scrollbar-thumb {
 ["Plated Cuirass","chest","heavychest",1050,,,,,,,12,,,,,,,,"","PlatedCuirass.png",""],
 ["Plated Helmet","head","heavyhelmet",350,,,,,,,6,,,,,,,,"","PlatedHelmet.png",""],
 ["Plated Helmet","head","heavyhelmet",280,,,,,,,6,,,,,,,,"","PlatedHelmet.png","uncommon"],
+["Plated Legs","legs","heavylegs",700,,,,,,,,7,,,,,,,"","PlatedLegs.png",""],
 ["Plated Shield","hand","heavyshield",800,,,,,,,,20,,,,4,,,"","PlatedShield.png",""],
 ["Quoki Headgear","head","lightmask",45,,,-22,,,,,,,1,,,,,"Customary headpiece.","QuokiHeadgear.png",""],
 ["Quoki Headgear","head","lightmask",40,,,-20,,,,,,,1,,,,,"Customary headpiece.","QuokiHeadgear.png","uncommon"],
@@ -1158,28 +1159,28 @@ body::-webkit-scrollbar-thumb {
                                         traitBonuses.Damage += Math.abs(leftHandItemTrait6[5]);
                                     }
                                     if (leftHandItemTrait6[6] < 0) {
-                                        traitBonuses.Ability += Math.abs(leftHandItemTrait6[6]);
+                                        traitBonuses.Health += Math.abs(leftHandItemTrait6[6]);
                                     }
                                     if (leftHandItemTrait6[7] < 0) {
-                                        traitBonuses.Magic += Math.abs(leftHandItemTrait6[7]);
+                                        traitBonuses.Mana += Math.abs(leftHandItemTrait6[7]);
                                     }
                                     if (leftHandItemTrait6[8] < 0) {
-                                        traitBonuses.Armor += Math.abs(leftHandItemTrait6[8]);
+                                        traitBonuses.Ability += Math.abs(leftHandItemTrait6[8]);
                                     }
                                     if (leftHandItemTrait6[9] < 0) {
-                                        traitBonuses.Defense += Math.abs(leftHandItemTrait6[9]);
+                                        traitBonuses.Magic += Math.abs(leftHandItemTrait6[9]);
                                     }
                                     if (leftHandItemTrait6[10] < 0) {
-                                        traitBonuses.Movespeed += Math.abs(leftHandItemTrait6[10]);
+                                        traitBonuses.Armor += Math.abs(leftHandItemTrait6[10]);
                                     }
                                     if (leftHandItemTrait6[11] < 0) {
-                                        traitBonuses["Attack Speed"] += Math.abs(leftHandItemTrait6[11]);
+                                        traitBonuses.Defense += Math.abs(leftHandItemTrait6[11]);
                                     }
                                     if (leftHandItemTrait6[12] < 0) {
-                                        traitBonuses.Mana += Math.abs(leftHandItemTrait6[12]);
+                                        traitBonuses.Movespeed += Math.abs(leftHandItemTrait6[12]);
                                     }
                                     if (leftHandItemTrait6[13] < 0) {
-                                        traitBonuses.Health += Math.abs(leftHandItemTrait6[13]);
+                                        traitBonuses["Attack Speed"] += Math.abs(leftHandItemTrait6[13]);
                                     }
                                 }
                                 if (rightHandItemTrait6 && rightHandItemTrait6[2].includes("sword") && rightHandItemTrait6[5] >= 7) {
@@ -1552,7 +1553,7 @@ body::-webkit-scrollbar-thumb {
                             const selectionItem = document.createElement('div');
                             selectionItem.classList.add('selection-item');
                             const img = document.createElement('img');
-                            if(item[19]) img.src = `Items/${item[19]}`;
+                            if(item[19]) img.src = `Items/${item[19].replace("'","").replace("%E2%80%99","")}`;
                             img.alt = `${item[0]}`;
                             img.classList.remove('uncommon','rare','epic','legendary');
                             if (item[20]) img.classList.add(item[20]);
@@ -1733,12 +1734,13 @@ body::-webkit-scrollbar-thumb {
                     if (items[index]) {
                         const [itemName, rarity] = items[index].split(':');
                         if(itemName !== ""){
-                            const sanitizedItemName = itemName.replace(/['"]/g, "").replace(" ","");
+                            const sanitizedItemName = itemName.replace(/['"]/g, "").replace(" ","").replace("’","");
+                            //console.log("FIX THIS============>"+itemName+" AND THIS:"+sanitizedItemName);
                             img.src = `Items/${sanitizedItemName}.png`;
                             img.alt = itemName.replace("\%20","");
                             img.style.display = 'block';
                             if (rarity) img.classList.add(rarity);
-                            setImageSize(img); // Ensure image size is set correctly
+                            setImageSize(img); // ENsure image size is set correctly
                         }
                     }
                 });
