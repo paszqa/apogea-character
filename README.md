@@ -13,6 +13,8 @@ Cheers!
 ------------------
 Changelog:
 2025 Mar 10
+- Added Zircon Ring
+- Added rare variants for Golden Ring and Silver Amu (thx Solace)
 - Fixed Well Protected, Heavy Metal and Magic Blade for right hand (thanks stickman)
 2025 Mar 09
 - fixed some visual bugs
