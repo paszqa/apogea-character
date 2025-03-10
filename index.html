@@ -1004,9 +1004,9 @@ body::-webkit-scrollbar-thumb {
                                 const itemName = img.getAttribute('alt');
                                 const item = items.find(i => i[0] === itemName);
                                 if (item && item[2].includes("heavy")) {
-                                    if(item[8] > 0 && item[8] != "" && item[8] != null){
-                                        console.log(item+" adds "+item[8]);
-                                        heavyArmorTotalArmor += item[8];
+                                    if(item[8] > 0 && item[10] != "" && item[10] != null){
+                                        console.log(item+" adds "+item[10]);
+                                        heavyArmorTotalArmor += item[10];
                                     }
                                 }
                             });
@@ -1038,9 +1038,9 @@ body::-webkit-scrollbar-thumb {
                                     const itemName = img.getAttribute('alt');
                                     const item = items.find(i => i[0] === itemName);
                                     if (item) {
-                                        if(item[8] > 0 && item[8] != "" && item[8] != null){
-                                            console.log(item+" adds "+item[8]);
-                                            heavyArmorTotalArmor2 += item[8];
+                                        if(item[8] > 0 && item[10] != "" && item[10] != null){
+                                            console.log(item+" adds "+item[10]);
+                                            heavyArmorTotalArmor2 += item[10];
                                         }
                                     }
                                 });
@@ -1192,30 +1192,30 @@ body::-webkit-scrollbar-thumb {
                                         traitBonuses.Damage += Math.abs(rightHandItemTrait6[5]);
                                     }
                                     if (rightHandItemTrait6[6] < 0) {
-                                        traitBonuses.Ability += Math.abs(rightHandItemTrait6[6]);
+                                        traitBonuses.Health += Math.abs(rightHandItemTrait6[6]);
+                                    }
+                                    if (rightHandItemTrait6[7] < 0) {
+                                        traitBonuses.Mana += Math.abs(rightHandItemTrait6[7]);
+                                    }
+                                    if (rightHandItemTrait6[8] < 0) {
+                                        traitBonuses.Ability += Math.abs(rightHandItemTrait6[8]);
                                     }
                                     //the worst code ever
                                     //don't look at this
-                                    if (rightHandItemTrait6[7] < 0) {
-                                        traitBonuses.Magic += Math.abs(rightHandItemTrait6[7]);
-                                    }
-                                    if (rightHandItemTrait6[8] < 0) {
-                                        traitBonuses.Armor += Math.abs(rightHandItemTrait6[8]);
-                                    }
                                     if (rightHandItemTrait6[9] < 0) {
-                                        traitBonuses.Defense += Math.abs(rightHandItemTrait6[9]);
+                                        traitBonuses.Magic += Math.abs(rightHandItemTrait6[9]);
                                     }
                                     if (rightHandItemTrait6[10] < 0) {
-                                        traitBonuses.Movespeed += Math.abs(rightHandItemTrait6[10]);
+                                        traitBonuses.Armor += Math.abs(rightHandItemTrait6[10]);
                                     }
                                     if (rightHandItemTrait6[11] < 0) {
-                                        traitBonuses["Attack Speed"] += Math.abs(rightHandItemTrait6[11]);
+                                        traitBonuses.Defense += Math.abs(rightHandItemTrait6[11]);
                                     }
                                     if (rightHandItemTrait6[12] < 0) {
-                                        traitBonuses.Mana += Math.abs(rightHandItemTrait6[12]);
+                                        traitBonuses.Movespeed += Math.abs(rightHandItemTrait6[12]);
                                     }
                                     if (rightHandItemTrait6[13] < 0) {
-                                        traitBonuses.Health += Math.abs(rightHandItemTrait6[13]);
+                                        traitBonuses["Attack Speed"] += Math.abs(rightHandItemTrait6[13]);
                                     }
                                     //i don't careeeee
                                 }
