@@ -619,7 +619,7 @@ body::-webkit-scrollbar-thumb {
 ["Plated Cuirass","chest","heavychest",1050,,,,,,,12,,,,,,,,"","PlatedCuirass.png",""],
 ["Plated Helmet","head","heavyhelmet",350,,,,,,,6,,,,,,,,"","PlatedHelmet.png",""],
 ["Plated Helmet","head","heavyhelmet",280,,,,,,,6,,,,,,,,"","PlatedHelmet.png","uncommon"],
-["Plated Legs","legs","heavylegs",700,,,,,,,,7,,,,,,,"","PlatedLegs.png",""],
+["Plated Legs","legs","heavylegs",700,,,,,,,7,,,,,,,,"","PlatedLegs.png",""],
 ["Plated Shield","hand","heavyshield",800,,,,,,,,20,,,,4,,,"","PlatedShield.png",""],
 ["Quoki Headgear","head","lightmask",45,,,-22,,,,,,,1,,,,,"Customary headpiece.","QuokiHeadgear.png",""],
 ["Quoki Headgear","head","lightmask",40,,,-20,,,,,,,1,,,,,"Customary headpiece.","QuokiHeadgear.png","uncommon"],
@@ -1004,9 +1004,11 @@ body::-webkit-scrollbar-thumb {
                                 const itemName = img.getAttribute('alt');
                                 const item = items.find(i => i[0] === itemName);
                                 if (item && item[2].includes("heavy")) {
-                                    if(item[8] > 0 && item[10] != "" && item[10] != null){
+                                    console.log("HEAVY ARMOR CALC: "+item+" adds "+item[10]+" to total armor");
+                                    if(item[10] > 0 && item[10] != "" && item[10] != null){
                                         console.log(item+" adds "+item[10]);
-                                        heavyArmorTotalArmor += item[10];
+                                        heavyArmorTotalArmor += item[10] || 0;
+                                        console.log("HEAVY ARMOR is now: "+heavyArmorTotalArmor);
                                     }
                                 }
                             });
@@ -1038,7 +1040,7 @@ body::-webkit-scrollbar-thumb {
                                     const itemName = img.getAttribute('alt');
                                     const item = items.find(i => i[0] === itemName);
                                     if (item) {
-                                        if(item[8] > 0 && item[10] != "" && item[10] != null){
+                                        if(item[10] > 0 && item[10] != "" && item[10] != null){
                                             console.log(item+" adds "+item[10]);
                                             heavyArmorTotalArmor2 += item[10];
                                         }
