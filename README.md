@@ -12,6 +12,8 @@ Cheers!
 
 ------------------
 Changelog:
+2025 Mar 10
+- Fixed Well Protected, Heavy Metal and Magic Blade for right hand (thanks stickman)
 2025 Mar 09
 - fixed some visual bugs
 - highlighted rarity in the description
