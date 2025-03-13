@@ -693,7 +693,7 @@ body::-webkit-scrollbar-thumb {
             [7, "Dressing Wizardly", "Armor gives you Mana for each oz under X oz, capped at 20 Mana", [0,25,33,45]],
             [8, "Powerful Space", "Gain 5% Magic for each X Free Capacity you have, capping at 20%", [0,50,35,15]],
             [9, "Clothes of the Damned", "Removes negative effects from light armor and gain 5% Magic for each equipped light armor", ["Off", "On"]],
-            [10, "Block Efficiacy", "Shields have more defense", [0,1,4,8,14,20]],
+            [10, "Block Efficiacy", "Shields have more defense", ["0%","1%","4%","8%","14%","20%"]],
             [11, "Bread and Butter", "Using a sword and shield gives you extra damage", [0,2,4,8]],
             [12, "Well Protected", "Heavy armor has more Armor", ["0", "1%","5%","10%","17%","25%"]],
             [13, "Bulking Up", "Gain Health for each equipped heavy armor", [0,5,10,25]],
@@ -983,10 +983,10 @@ body::-webkit-scrollbar-thumb {
                             const leftHandItemTrait = items.find(i => i[0] === leftHandSlotTrait.querySelector('img').getAttribute('alt'));
                             const rightHandItemTrait = items.find(i => i[0] === rightHandSlotTrait.querySelector('img').getAttribute('alt'));
                             if (leftHandItemTrait && leftHandItemTrait[2].includes("shield")) {
-                                traitBonuses.Defense += parseInt(stage);
+                                traitBonuses.Defense += calculateItemBonuses().Defense * (parseInt(stage)/100);;
                             }
                             if (rightHandItemTrait && rightHandItemTrait[2].includes("shield")) {
-                                traitBonuses.Defense += parseInt(stage);
+                                traitBonuses.Defense += calculateItemBonuses().Defense & (parseInt(stage)/100);
                             }
                             break;
                         case "11": // Bread and Butter
